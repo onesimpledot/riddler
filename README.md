@@ -12,7 +12,7 @@ Ideas:
  - input via a specified .txt file
 
 ## Finished Puzzle Output Method
-Also in devlopment. \
+Also in development. \
 Ideas
  - output into .txt file
  - output to the console
