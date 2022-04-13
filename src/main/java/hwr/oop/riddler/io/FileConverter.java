@@ -2,7 +2,7 @@ package hwr.oop.riddler.io;
 
 import java.io.*;
 
-public class SudokuConverter {
+public class FileConverter {
     public int[][] parseInputFile(String filePath) {
         try (var bufferedReader = new BufferedReader(new FileReader(filePath))){
             var sudoku = new int[9][9];
