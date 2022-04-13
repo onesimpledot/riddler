@@ -3,10 +3,8 @@ package hwr.oop.riddler.io;
 import java.io.*;
 
 public class SudokuConverter {
-    public int[][] parseInputFile(String filepath) {
-        try {
-            var file = new File(filepath);
-            var bufferedReader = new BufferedReader(new FileReader(file));
+    public int[][] parseInputFile(String filePath) {
+        try (var bufferedReader = new BufferedReader(new FileReader(filePath))){
             var sudoku = new int[9][9];
             int rowIndex = 0;
             for (String line; (line = bufferedReader.readLine()) != null; rowIndex++) {
