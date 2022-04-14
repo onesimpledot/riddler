@@ -1,4 +1,7 @@
 package hwr.oop.riddler.model.component;
 
-public class Column implements CellGroup {
+public class Column extends CellGroup {
+    public Column(Cell[] cells) {
+        super(cells);
+    }
 }
