@@ -38,30 +38,25 @@ public class Sudoku {
 
     private void interpretColumns() {
         for (int columnIndex = 0; columnIndex < this.cells[0].length; columnIndex++) {
-            var column = new ArrayList<Cell>();
-            for (Cell[] row : this.cells) {
-                column.add(row[columnIndex]);
+            var column = new Cell[this.cells[0].length];
+            for (int rowIndex = 0; rowIndex < this.cells[0].length; rowIndex++) {
+                column[rowIndex] = cells[rowIndex][columnIndex];
             }
-
-            var columnArray = new Cell[column.size()];
-            this.columns[columnIndex] = new Column(column.toArray(columnArray));
+            this.columns[columnIndex] = new Column(column);
         }
     }
 
     private void interpretBoxes() {
         for (int boxIndex = 0; boxIndex < this.boxes.length; boxIndex++) {
-            var box = new ArrayList<Cell>();
+            var box = new Cell[this.boxes.length];
             int boxLattitude = boxIndex / 3;
             int boxLongitude = boxIndex % 3;
-
-            for (int x = 0; x < 3; x++) {
-                for (int y = 0; y < 3; y++) {
-                    box.add(cells[boxLattitude+x][boxLongitude+y]);
+            for (int y = 0; y < 3; y++) {
+                for (int x = 0; x < 3; x++) {
+                    box[3*y + x] = cells[boxLattitude + y][boxLongitude + x];
                 }
             }
-
-            var boxArray = new Cell[box.size()];
-            this.boxes[boxIndex] = new Box(box.toArray(boxArray));
+            this.boxes[boxIndex] = new Box(box);
         }
     }
 }

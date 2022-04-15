@@ -9,8 +9,4 @@ public abstract class CellGroup {
     protected CellGroup(Cell[] cells) {
         this.cells.addAll(Set.of(cells));
     }
-
-    public void whittleDownPossibles(){
-
-    }
 }
