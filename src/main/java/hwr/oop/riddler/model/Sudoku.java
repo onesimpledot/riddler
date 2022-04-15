@@ -59,4 +59,28 @@ public class Sudoku {
             this.boxes[boxIndex] = new Box(box);
         }
     }
+
+    public Row getRow(int rowIndex) {
+        return new Row(cells[rowIndex]);
+    }
+
+    public Column getColumn(int columnIndex) {
+        var column = new Cell[this.cells[0].length];
+        for (int rowIndex = 0; rowIndex < this.cells[0].length; rowIndex++) {
+            column[rowIndex] = cells[rowIndex][columnIndex];
+        }
+        return new Column(column);
+    }
+
+    public Box getBox(int boxIndex) {
+        var box = new Cell[this.boxes.length];
+        int boxLattitude = boxIndex / 3;
+        int boxLongitude = boxIndex % 3;
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 3; x++) {
+                box[3*y + x] = cells[boxLattitude + y][boxLongitude + x];
+            }
+        }
+        return new Box(box);
+    }
 }
