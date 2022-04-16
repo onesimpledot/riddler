@@ -1,86 +1,83 @@
 package hwr.oop.riddler.model;
 
-import hwr.oop.riddler.model.component.Box;
-import hwr.oop.riddler.model.component.Cell;
-import hwr.oop.riddler.model.component.Column;
-import hwr.oop.riddler.model.component.Row;
+import hwr.oop.riddler.model.component.*;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Sudoku {
-    public Cell[][] cells = new Cell[9][9];
-    public Row[] rows = new Row[9];
-    public Column[] columns = new Column[9];
-    public Box[] boxes = new Box[9];
+    public Cell[][] cells;
+    private final int size;
 
     public Sudoku(int[][] input) {
-        this.fillCells(input);
-        this.interpretRows();
-        this.interpretColumns();
-        this.interpretBoxes();
+        size = input.length;
+        cells = new Cell[size][size];
+        fillCells(input);
     }
 
     private void fillCells(int[][] input) {
-        for (int rowIndex = 0; rowIndex < input.length; rowIndex++) {
+        for (int rowIndex = 0; rowIndex < size; rowIndex++) {
             int[] row = input[rowIndex];
-            for (int columnIndex = 0; columnIndex < row.length; columnIndex++) {
+            for (int columnIndex = 0; columnIndex < size; columnIndex++) {
                 int cellValue = row[columnIndex];
-                this.cells[rowIndex][columnIndex] = new Cell(cellValue);
+                cells[rowIndex][columnIndex] = new Cell(cellValue);
             }
         }
     }
 
-    private void interpretRows() {
-        for (int rowIndex = 0; rowIndex < this.cells.length; rowIndex++) {
-            this.rows[rowIndex] = new Row(cells[rowIndex]);
-        }
+    public Cell[] getRow(int rowIndex) {
+        return cells[rowIndex];
     }
 
-    private void interpretColumns() {
-        for (int columnIndex = 0; columnIndex < this.cells[0].length; columnIndex++) {
-            var column = new Cell[this.cells[0].length];
-            for (int rowIndex = 0; rowIndex < this.cells[0].length; rowIndex++) {
-                column[rowIndex] = cells[rowIndex][columnIndex];
-            }
-            this.columns[columnIndex] = new Column(column);
-        }
-    }
-
-    private void interpretBoxes() {
-        for (int boxIndex = 0; boxIndex < this.boxes.length; boxIndex++) {
-            var box = new Cell[this.boxes.length];
-            int boxLattitude = boxIndex / 3;
-            int boxLongitude = boxIndex % 3;
-            for (int y = 0; y < 3; y++) {
-                for (int x = 0; x < 3; x++) {
-                    box[3*y + x] = cells[boxLattitude + y][boxLongitude + x];
-                }
-            }
-            this.boxes[boxIndex] = new Box(box);
-        }
-    }
-
-    public Row getRow(int rowIndex) {
-        return new Row(cells[rowIndex]);
-    }
-
-    public Column getColumn(int columnIndex) {
-        var column = new Cell[this.cells[0].length];
-        for (int rowIndex = 0; rowIndex < this.cells[0].length; rowIndex++) {
+    public Cell[] getColumn(int columnIndex) {
+        var column = new Cell[size];
+        for (int rowIndex = 0; rowIndex < size; rowIndex++) {
             column[rowIndex] = cells[rowIndex][columnIndex];
         }
-        return new Column(column);
+        return column;
     }
 
-    public Box getBox(int boxIndex) {
-        var box = new Cell[this.boxes.length];
-        int boxLattitude = boxIndex / 3;
+    public Cell[] getBox(int boxIndex) {
+        var box = new Cell[size];
+        int boxLatitude = boxIndex / 3;
         int boxLongitude = boxIndex % 3;
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++) {
-                box[3*y + x] = cells[boxLattitude + y][boxLongitude + x];
+                box[3*y + x] = cells[boxLatitude + y][boxLongitude + x];
             }
         }
-        return new Box(box);
+        return box;
+    }
+
+    public Cell[][] getRows() {
+        return cells;
+    }
+
+    public Cell[][] getColumns() {
+        Cell[][] column = new Cell[size][size];
+        for (int i = 0; i < size; i++) {
+            column[i] = getColumn(i);
+        }
+        return column;
+    }
+
+    public Cell[][] getBoxes() {
+        Cell[][] boxes = new Cell[size][size];
+        for (int i = 0; i < size; i++) {
+            boxes[i] = getBox(i);
+        }
+        return boxes;
+    }
+
+    public Set<Cell> getRowSet(int index) {
+        return new HashSet<>(Set.of(getRow(index)));
+    }
+
+    public Set<Cell> getColumnSet(int index) {
+        return new HashSet<>(Set.of(getColumn(index)));
+    }
+
+    public Set<Cell> getBoxSet(int boxIndex) {
+        return new HashSet<>(Set.of(getBox(boxIndex)));
     }
 }
