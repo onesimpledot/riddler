@@ -69,15 +69,33 @@ public class Sudoku {
         return boxes;
     }
 
-    public Set<Cell> getRowSet(int index) {
-        return new HashSet<>(Set.of(getRow(index)));
+    public Set<Integer> getRowValues(int rowIndex) {
+        Set<Integer> row = new HashSet<>();
+        for (Cell cell : getRow(rowIndex)) {
+            if (cell.value != 0) {
+                row.add(cell.value);
+            }
+        }
+        return row;
     }
 
-    public Set<Cell> getColumnSet(int index) {
-        return new HashSet<>(Set.of(getColumn(index)));
+    public Set<Integer> getColumnValues(int columnIndex) {
+        Set<Integer> column = new HashSet<>();
+        for (Cell cell : getColumn(columnIndex)) {
+            if (cell.value != 0) {
+                column.add(cell.value);
+            }
+        }
+        return column;
     }
 
-    public Set<Cell> getBoxSet(int boxIndex) {
-        return new HashSet<>(Set.of(getBox(boxIndex)));
+    public Set<Integer> getBoxValues(int boxIndex) {
+        Set<Integer> box = new HashSet<>();
+        for (Cell cell : getBox(boxIndex)) {
+            if (cell.value != 0) {
+                box.add(cell.value);
+            }
+        }
+        return box;
     }
 }
